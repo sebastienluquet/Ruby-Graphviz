@@ -40,6 +40,43 @@ Rake::RDocTask.new do |rdoc|
       'lib/graphviz/xml.rb']
 end
 
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |s|
+    s.name = PKG_NAME
+    s.version = PKG_VERS
+    s.platform = Gem::Platform::RUBY
+
+    s.authors = ["Gregoire Lejeune"]
+    s.summary = %q{Interface to the GraphViz graphing tool}
+    s.email = %q{gregoire.lejeune@free.fr}
+    s.homepage = %q{http://raa.ruby-lang.org/project/ruby-graphviz/}
+    s.description = %q{Ruby/Graphviz provides an interface to layout and generate images of directed graphs in a variety of formats (PostScript, PNG, etc.) using GraphViz.}
+
+    s.files = PKG_FILES
+    s.require_path = "lib"
+    s.bindir = "bin"
+    s.executables = ['ruby2gv']
+
+    s.add_dependency('treetop')
+
+    s.rubyforge_project = 'ruby-asp'
+    s.has_rdoc = true
+    s.extra_rdoc_files = ["README.rdoc", "ChangeLog", "COPYING", "AUTHORS"]
+    s.rdoc_options = ["--title", "Ruby/GraphViz", "--main", "README.rdoc", "--line-numbers"]
+
+    s.post_install_message = %{
+Since version 0.9.2, Ruby/GraphViz can use Open3.popen3 (or not)
+On Windows, you can install 'win32-open3'
+
+You need to install GraphViz (http://graphviz.org/) to use this Gem.
+
+}
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+end
+
 task :after_doc do
     sh %{scp -r doc/rdoc/* #{ENV['USER']}@rubyforge.org:/var/www/gforge-projects/ruby-asp/ruby-graphviz}
 end
