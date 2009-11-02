@@ -217,18 +217,23 @@ class GraphViz
     end
     
     class Options < Treetop::Runtime::SyntaxNode
-  def eval
-    options = {}
-    elements[2].elements.each do |e|
-      # puts "  #{e.elements[0].text_value} = #{e.elements[4].text_value}"
-      options[e.elements[0].text_value] = e.elements[4].text_value.gsub( /"/, "" )
-    end
-    # puts "  #{elements[3].text_value} = #{elements[7].text_value}"
-    options[elements[3].text_value] = elements[7].text_value.gsub( /"/, "" )
+      def eval
+        options = {}
+        elements[2].elements.each do |e|
+          # puts "  #{e.elements[0].text_value} = #{e.elements[4].text_value}"
+          options[e.elements[0].text_value] = e.elements[4].text_value.gsub( /"/, "" )
+        end
+        # puts "  #{elements[3].text_value} = #{elements[7].text_value}"
+        options[elements[3].text_value] = elements[7].text_value.gsub( /"/, "" )
     
-    return options
-  end
-end
+        return options
+      end
+    end
+
+    class Rank < Treetop::Runtime::SyntaxNode
+      def eval( context )
+      end
+    end
 
     def self.parse( file, *hOpts, &block )
       dot = open(file).read
